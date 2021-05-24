@@ -16,7 +16,7 @@ class LatestRailsPosts::CLI
   def list
     @posts = LatestRailsPosts::Post.latest_posts
     @posts.each.with_index(1) do |post, i|
-      puts "#{i}. #{post.headline}"
+      puts "#{i}. #{post.headline} | #{post.date}"
     end
 
     puts ""
