@@ -2,21 +2,21 @@ class LatestRailsPosts::CLI
 
   def call
     greeting
-    LatestRailsPosts::Story.scrape_latest_stories
+    LatestRailsPosts::Post.scrape_latest_posts
     list
     menu
   end
 
   def greeting
-    puts "Welcome to ScienceMag Latest News!"
+    puts "Welcome to the latest Rails News from Dev.to"
     puts "Fetching stories..."
     puts ""
   end
 
   def list
-    @stories = LatestRailsPosts::Story.latest_stories
-    @stories.each.with_index(1) do |story, i|
-      puts "#{i}. #{story.headline}"
+    @posts = LatestRailsPosts::Post.latest_posts
+    @posts.each.with_index(1) do |post, i|
+      puts "#{i}. #{post.headline}"
     end
 
     puts ""
@@ -29,16 +29,16 @@ class LatestRailsPosts::CLI
       puts "Type the number of the post you'd like to read. You can also type 'list' to see the stories again or 'exit'."
       input = gets.chomp
 
-      if input.to_i.between?(1, LatestRailsPosts::Story.latest_stories.size)
-        story = LatestRailsPosts::Story.find(input)
+      if input.to_i.between?(1, LatestRailsPosts::Post.latest_posts.size)
+        post = LatestRailsPosts::Post.find(input)
         puts ""
-        story.headline.size.times {print "-"}
+        post.headline.size.times {print "-"}
         puts ""
-        puts "#{story.headline}"
-        puts "#{story.author} | #{story.date}"
+        puts "#{post.headline}"
+        puts "#{post.author} | #{post.date}"
         puts ""
-        puts "#{story.content.join("\n\n")}"
-        story.headline.size.times {print "-"}
+        puts "#{post.content.join("\n\n")}"
+        post.headline.size.times {print "-"}
         puts ""
       elsif input == "list"
         list
